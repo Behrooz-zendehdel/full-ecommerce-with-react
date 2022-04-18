@@ -24,3 +24,21 @@
 .mainNavigation li {
     margin: 0 1rem;
 }
+
+.mainNavigation a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+
+}
+
+.mainNavigation a:hover {
+    color: red;
+    background-color: #FFF;
+
+}
+
+.activeTab {
+    background-color: #fff;
+}

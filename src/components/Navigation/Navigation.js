@@ -6,7 +6,9 @@ const Navigation = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" className="activeTab">
+              Home
+            </Link>
           </li>
           <li>
             <Link to="/cart">Cart</Link>
