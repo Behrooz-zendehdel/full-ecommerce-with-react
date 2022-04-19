@@ -1,9 +1,11 @@
 import Layout from "../Layout/Layout";
-import { useCart } from "../Providers/CartProvider";
+import { useCart, useCartActions } from "../Providers/CartProvider";
+
 import "./cartPage.css";
 
 const CartPage = () => {
-  const { cart } = useCart();
+  const { cart, total } = useCart();
+  const dispatch = useCartActions();
   if (!cart.length)
     return (
       <Layout>
@@ -12,11 +14,17 @@ const CartPage = () => {
         </main>
       </Layout>
     );
+  const incHandler = (cartItem) => {
+    dispatch({ type: "ADD_TO_CART", payload: cartItem });
+  };
+  const decHandler = (cartItem) => {
+    dispatch({ type: "REMOVE_PRODUCT", payload: cartItem });
+  };
 
   return (
     <Layout>
       <main className="container">
-        <section className='cartCenter'>
+        <section className="cartCenter">
           <section className="cartItemList">
             {cart.map((item) => {
               return (
@@ -27,15 +35,18 @@ const CartPage = () => {
                   <div>{item.name}</div>
                   <div>{item.price * item.quantity}</div>
                   <div>
-                    <button>remove</button>
+                    <button onClick={() => decHandler(item)}>remove</button>
                     <button>{item.quantity}</button>
-                    <button>add</button>
+                    <button onClick={() => incHandler(item)}>add</button>
                   </div>
                 </div>
               );
             })}
           </section>
-          <section className="cartSummery">cart summery</section>
+          <section className="cartSummery">
+            <h2>cart summery</h2>
+            <div>{total} $</div>
+          </section>
         </section>
       </main>
     </Layout>
