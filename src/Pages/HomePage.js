@@ -1,7 +1,15 @@
 import Layout from "../Layout/Layout";
 import * as data from "../data/data";
+import { useCartActions } from "../Providers/CartProvider";
 
 const HomePage = () => {
+  const dispatch = useCartActions();
+
+  const addProductHanslder = (product) => {
+    console.log(product);
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
+
   return (
     <Layout>
       <main className="container">
@@ -15,7 +23,12 @@ const HomePage = () => {
                 <div className="productDesc">
                   <p>{product.name}</p>
                   <p>$ {product.price}</p>
-                  <button className="btn primary">add to cart</button>
+                  <button
+                    onClick={() => addProductHanslder(product)}
+                    className="btn primary"
+                  >
+                    add to cart
+                  </button>
                 </div>
               </section>
             );
