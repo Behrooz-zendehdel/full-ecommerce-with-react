@@ -6,7 +6,7 @@ const HomePage = () => {
   const dispatch = useCartActions();
 
   const addProductHanslder = (product) => {
-    console.log(product);
+    // console.log(product);
     dispatch({ type: "ADD_TO_CART", payload: product });
   };
 
@@ -16,7 +16,7 @@ const HomePage = () => {
         <section className="productList">
           {data.products.map((product) => {
             return (
-              <section className="product">
+              <section className="product" key={product.id}>
                 <div className="productImg">
                   <img src={product.image} alt={product.name}></img>
                 </div>
