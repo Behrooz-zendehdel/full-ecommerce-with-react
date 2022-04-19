@@ -1,6 +1,4 @@
 const cartReducer = (state, action) => {
-
-  
   const addProductFormCard = (state, payload) => {
     const updatedCart = [...state.cart];
     const updatedItemIndex = updatedCart.findIndex(
@@ -17,7 +15,7 @@ const cartReducer = (state, action) => {
     return {
       ...state,
       cart: updatedCart,
-      total: state.total + action.payload.price,
+      total: state.total + action.payload.offPrice,
     };
   };
   const removeProductFromCard = (state, payload) => {
@@ -31,7 +29,7 @@ const cartReducer = (state, action) => {
       return {
         ...state,
         cart: filteredCart,
-        total: state.total - payload.price,
+        total: state.total - payload.offPrice,
       };
     } else {
       updatedItem.quantity--;
@@ -39,7 +37,7 @@ const cartReducer = (state, action) => {
       return {
         ...state,
         cart: updatedCart,
-        total: state.total - payload.price,
+        total: state.total - payload.offPrice,
       };
     }
   };

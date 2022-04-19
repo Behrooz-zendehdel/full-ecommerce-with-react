@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import { useCart, useCartActions } from "../Providers/CartProvider";
 
@@ -33,20 +34,17 @@ const CartPage = () => {
                     <img src={item.image} alt={item.name}></img>
                   </div>
                   <div>{item.name}</div>
-                  <div>{item.price * item.quantity}</div>
-                  <div>
-                    <button onClick={() => decHandler(item)}>remove</button>
+                  <div>{item.offPrice * item.quantity}</div>
+                  <div className="btnGroup">
+                    <button onClick={() => decHandler(item)}>-</button>
                     <button>{item.quantity}</button>
-                    <button onClick={() => incHandler(item)}>add</button>
+                    <button onClick={() => incHandler(item)}>+</button>
                   </div>
                 </div>
               );
             })}
           </section>
-          <section className="cartSummery">
-            <h2>cart summery</h2>
-            <div>{total} $</div>
-          </section>
+          <CardSummery total={total} cart={cart} />
         </section>
       </main>
     </Layout>
@@ -54,3 +52,34 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+const CardSummery = ({ total, cart }) => {
+  const originalTotalPrice = cart.length
+    ? cart.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
+    : 0;
+  return (
+    <section className="cartSummery">
+      <h2 style={{ marginBottom: "10px" }}>cart summery</h2>
+      <div className="summeryItem">
+        <p>original total price </p>
+        <p>{originalTotalPrice} $</p>
+      </div>
+      <div className="summeryItem">
+        <p>cart discount </p>
+        <p>{originalTotalPrice - total} $</p>
+      </div>
+      <div className="summeryItem net">
+        <p>net price </p>
+        <p>{total} $</p>
+      </div>
+      <Link to="/checkout">
+        <button
+          style={{ marginTop: "20px ", width: "100%" }}
+          className="btn primary"
+        >
+          Go to checkout
+        </button>
+      </Link>
+    </section>
+  );
+};
