@@ -1,8 +1,10 @@
 import Layout from "../Layout/Layout";
 import * as data from "../data/data";
-import { useCartActions } from "../Providers/CartProvider";
+import { useCart, useCartActions } from "../Providers/CartProvider";
+import { checkInCart } from "../utils/checkInCart";
 
 const HomePage = () => {
+  const { cart } = useCart();
   const dispatch = useCartActions();
 
   const addProductHanslder = (product) => {
@@ -27,7 +29,7 @@ const HomePage = () => {
                     onClick={() => addProductHanslder(product)}
                     className="btn primary"
                   >
-                    add to cart
+                    {checkInCart(cart, product) ? "In Cart" : "add to cart"}
                   </button>
                 </div>
               </section>

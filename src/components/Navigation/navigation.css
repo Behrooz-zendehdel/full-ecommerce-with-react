@@ -42,3 +42,22 @@
 .activeTab {
     background-color: #fff;
 }
+
+.cartLink {
+    position: relative;
+}
+
+.mainNavigation span {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: #fff;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -9px;
+    right: -9px;
+
+}
