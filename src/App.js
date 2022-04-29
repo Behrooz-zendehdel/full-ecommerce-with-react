@@ -6,18 +6,21 @@ import CartProvider from "./Providers/CartProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutPage from "./Pages/CheckoutPage";
+import LoginPage from "./Pages/LoginPage";
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <CartProvider>
-        <ToastContainer />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/cart" element={<CartPage />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
       </CartProvider>
+      
     </BrowserRouter>
   );
 }
