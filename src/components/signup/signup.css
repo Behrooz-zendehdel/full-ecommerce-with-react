@@ -25,6 +25,7 @@ input + label {
 }
 
 input[type="text"],
+input[type="tel"],
 input[type="email"],
 input[type="password"],
 select {
@@ -53,4 +54,14 @@ button {
 .formConatiner {
   display: flex;
   justify-content: center;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+  color: #444;
+}
+input:focus {
+  border: 2px solid #6d28d9;
+  outline: none;
 }

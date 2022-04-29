@@ -37,18 +37,11 @@ const validationSchema = yup.object({
     ),
   passwordConfrim: yup
     .string()
-    .required("passwrod confrim is required")
-    .oneOf([yup.ref("password"), null])
-    .min(8, "Error"),
+    .required()
+    .oneOf([yup.ref("password"), null], "password must matechs"),
 });
 
-const SignupForm = ({
-  name,
-  email,
-  phoneNumber,
-  password,
-  passwordConfrim,
-}) => {
+const SignupForm = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -61,9 +54,19 @@ const SignupForm = ({
       <form onSubmit={formik.handleSubmit}>
         <Input formik={formik} name="name" label="Name" />
         <Input formik={formik} name="email" label="Email" type="email" />
-        <Input formik={formik} name="phoneNumber" label="phone Number" />
-        <Input formik={formik} name="password" label="Password" />
-        <Input formik={formik} name="passwordConfrim" label="passwordConfrim" />
+        <Input
+          formik={formik}
+          name="phoneNumber"
+          label="phone Number"
+          type="tel"
+        />
+        <Input formik={formik} name="password" label="password" type="text" />
+        <Input
+          formik={formik}
+          name="passwordConfrim"
+          label="password Confrim"
+          type="text"
+        />
         <button
           style={{ width: "100%" }}
           className="btn primary"
