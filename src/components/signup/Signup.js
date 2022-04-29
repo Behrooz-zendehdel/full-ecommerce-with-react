@@ -73,7 +73,7 @@ const SignupForm = () => {
           type="submit"
           disabled={!formik.isValid}
         >
-          submit
+         signup
         </button>
       </form>
     </div>
