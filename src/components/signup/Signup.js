@@ -3,6 +3,8 @@ import Input from "../../common/Input";
 import * as yup from "yup";
 import "./signup.css";
 import { Link } from "react-router-dom";
+import { signupUser } from "../../Services/sinupService";
+import { useState } from "react";
 const initialValues = {
   name: "",
   email: "",
@@ -10,9 +12,7 @@ const initialValues = {
   password: "",
   passwordConfrim: "",
 };
-const onSubmit = (values) => {
-  console.log(values);
-};
+
 const validationSchema = yup.object({
   name: yup
     .string()
@@ -29,13 +29,11 @@ const validationSchema = yup.object({
       "required in valid"
     )
     .nullable(),
-  password: yup
-    .string()
-    .required("password is required")
-    .matches(
-      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
+  password: yup.string().required("password is required"),
+  // .matches(
+  //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+  //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  // ),
   passwordConfrim: yup
     .string()
     .required()
@@ -43,6 +41,25 @@ const validationSchema = yup.object({
 });
 
 const SignupForm = () => {
+  const [error, setError] = useState(null);
+  const onSubmit = async (values) => {
+    const { name, email, password, phoneNumber } = values;
+    const userData = {
+      name,
+      email,
+      phoneNumber,
+      password,
+    };
+    try {
+      const { data } = await signupUser(userData);
+      console.log(data);
+    } catch (error) {
+      console.log(error.response.data.message)
+      if (error.response && error.response.data.message)
+        setError(error.response.data.message);
+    }
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -76,6 +93,7 @@ const SignupForm = () => {
         >
           signup
         </button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <Link to="/login">
           <p className="top">Already login ?</p>
         </Link>
