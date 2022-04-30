@@ -3,8 +3,7 @@ import Input from "../../common/Input";
 import * as yup from "yup";
 import "./signup.css";
 import { Link } from "react-router-dom";
-
-import { signupUser } from "../../Services/sinupService";
+import signupUser from "../../Services/sinupService";
 import { useState } from "react";
 
 const initialValues = {
@@ -54,6 +53,7 @@ const SignupForm = () => {
       phoneNumber,
       password,
     };
+    setError(null);
     try {
       const { data } = await signupUser(userData);
       console.log(data);
