@@ -2,38 +2,41 @@ import { useFormik } from "formik";
 import Input from "../../common/Input";
 import * as yup from "yup";
 import "./login.css";
-import { Link } from "react-router-dom";
-import loginUser from "../../services/loginService";
+import { Link, Navigate } from "react-router-dom";
+import loginUser from "../../Services/loginService";
 import { useState } from "react";
-
+// import { useAuthActions } from "../../Providers/AuthProvider";
+import { toast } from "react-toastify";
 const initialValues = {
   email: "",
   password: "",
 };
 
-
-
 const validationSchema = yup.object({
-  name: yup.string().required("required is Name"),
+  email: yup.string().required("required is email"),
   password: yup.string().required("reuqired is password"),
 });
 
 const LoginForm = () => {
-  const [error,setError]=useState(null)
-  const onSubmit = async(values) => {
-    const {email,password}=values
-    const userData={
-     email,password,
+  // const setAuth = useAuthActions();
+  const [error, setError] = useState(null);
+  const onSubmit = async (values) => {
+    console.log(values);
+    setError(null);
+    try {
+      const { data } = await loginUser(values);
+      // setAuth(data);
+      // localStorage.setItem("authState", JSON.stringify(data));
+      setError(null);
+      Navigate("/");
+
+      console.log(data);
+    } catch (error) {
+      if (error.response && error.response.data.message)
+        setError(error.response.data.message);
     }
-try {
-  const {data}=await loginUser(userData)
-  console.log(data)
-  setError(null)
-} catch (error) {
-  console.log(error.response.data.message)
-  if(error.response && error.response.data.message )
-  setError(error.response.data.message)
-}}
+  };
+
   const formik = useFormik({
     initialValues,
     validateOnMount: "true",
@@ -55,7 +58,9 @@ try {
         >
           login
         </button>
-        {error && <p style={{color:"red"}}>{error}</p>}
+
+        {error && <p style={{ color: "red" }}>{error}</p> &&
+          toast.success("wellcome")}
         <Link to="/signup">
           <p className="top">Not signup yet ?</p>
         </Link>

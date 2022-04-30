@@ -9,13 +9,14 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import LoginPage from "./Pages/LoginPage";
 
 import SignupPage from "./Pages/SignupPage";
+// import AuthProvider from "./Providers/AuthProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <ToastContainer />
+      {/* <AuthProvider> */}
       <CartProvider>
-
         <ToastContainer />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -24,9 +25,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Routes>
-
       </CartProvider>
-      
+      {/* </AuthProvider> */}
     </BrowserRouter>
   );
 }

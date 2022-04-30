@@ -1,6 +1,5 @@
-import http from "./httpService";
-
- const loginUser =(data)=>{
-return http.post('/user/register',data)
-}
-export default loginUser
+import http from "./httpServices";
+const loginUser = (data) => {
+  return http.post("/user/login", data);
+};
+export default loginUser;

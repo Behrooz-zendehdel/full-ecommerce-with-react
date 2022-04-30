@@ -3,9 +3,9 @@ import Input from "../../common/Input";
 import * as yup from "yup";
 import "./signup.css";
 import { Link } from "react-router-dom";
-import signupUser from "../../services/signupService";
+import signupUser from "../../Services/sinupService";
 import { useState } from "react";
-
+import { Navigate } from "react-router-dom";
 const initialValues = {
   name: "",
   email: "",
@@ -30,32 +30,45 @@ const validationSchema = yup.object({
       "required in valid"
     )
     .nullable(),
+
   password: yup.string().required("password is required"),
+  // .matches(
+  //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+  //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  // ),
+
   passwordConfrim: yup
     .string()
     .required()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-const SignupForm = () => {
+const SignupForm = (history) => {
   const [error, setError] = useState(null);
+
   const onSubmit = async (values) => {
     const { name, email, password, phoneNumber } = values;
     const userData = {
       name,
       email,
-      password,
       phoneNumber,
+      password,
     };
     try {
       const { data } = await signupUser(userData);
+      setError(null);
+      Navigate("/");
+
+      // console.log(props.params);
+
       console.log(data);
     } catch (error) {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       if (error.response && error.response.data.message)
         setError(error.response.data.message);
     }
   };
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema,
@@ -82,6 +95,7 @@ const SignupForm = () => {
           label="password Confrim"
           type="text"
         />
+
         <button
           style={{ width: "100%" }}
           className="btn primary"
@@ -90,6 +104,7 @@ const SignupForm = () => {
         >
           signup
         </button>
+
         {error && <p style={{ color: "red" }}>{error}</p>}
         <Link to="/login">
           <p className="top">Already login ?</p>
