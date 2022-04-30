@@ -2,9 +2,10 @@ import { useFormik } from "formik";
 import Input from "../../common/Input";
 import * as yup from "yup";
 import "./signup.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import signupUser from "../../Services/sinupService";
 import { useState } from "react";
+import { useAuthActions } from "../../Providers/AuthProvider";
 
 const initialValues = {
   name: "",
@@ -44,7 +45,10 @@ const validationSchema = yup.object({
 });
 
 const SignupForm = () => {
+  const SetAuth = useAuthActions();
+  const params = useParams();
   const [error, setError] = useState(null);
+
   const onSubmit = async (values) => {
     const { name, email, password, phoneNumber } = values;
     const userData = {
@@ -54,8 +58,11 @@ const SignupForm = () => {
       password,
     };
     setError(null);
+    params.push("/");
     try {
       const { data } = await signupUser(userData);
+      SetAuth(data)
+      // localStorage.setItem('authState',JSON.stringify(data))
       console.log(data);
     } catch (error) {
       console.log(error.response.data.message);
