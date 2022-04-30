@@ -7,9 +7,6 @@ import { Link } from "react-router-dom";
 import { signupUser } from "../../Services/sinupService";
 import { useState } from "react";
 
-
-
-
 const initialValues = {
   name: "",
   email: "",
@@ -61,18 +58,18 @@ const SignupForm = () => {
       const { data } = await signupUser(userData);
       console.log(data);
     } catch (error) {
-      console.log(error.response.data.message)
+      console.log(error.response.data.message);
       if (error.response && error.response.data.message)
         setError(error.response.data.message);
     }
   };
 
   const formik = useFormik({
-    initialValues :initialValues,
+    initialValues: initialValues,
     validationSchema,
     onSubmit,
     validateOnMount: true,
-    enableReinitialize:true,
+    enableReinitialize: true,
   });
 
   return (
