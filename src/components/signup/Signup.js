@@ -4,7 +4,7 @@ import * as yup from "yup";
 import "./signup.css";
 import { Link } from "react-router-dom";
 
-import { signupUser } from "../../Services/sinupService";
+import signupUser from "../../services/signupService";
 import { useState } from "react";
 
 
@@ -36,16 +36,15 @@ const validationSchema = yup.object({
     .nullable(),
 
   password: yup.string().required("password is required"),
+
+
+  password: yup.string().required("password is required"),
   // .matches(
   //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
   //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
   // ),
 
-  passwordConfrim: yup
-    .string()
-    .required()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
-});
+
 
 const SignupForm = () => {
   const [error, setError] = useState(null);
@@ -54,25 +53,28 @@ const SignupForm = () => {
     const userData = {
       name,
       email,
+
+      password,
+      phoneNumber,
+
       phoneNumber,
       password,
-    };
-    try {
-      const { data } = await signupUser(userData);
-      console.log(data);
-    } catch (error) {
+
+
+      console.log(error.response.data.message);
+
       console.log(error.response.data.message)
-      if (error.response && error.response.data.message)
-        setError(error.response.data.message);
-    }
-  };
+
+
+
+
 
   const formik = useFormik({
-    initialValues :initialValues,
+    initialValues: initialValues,
     validationSchema,
     onSubmit,
     validateOnMount: true,
-    enableReinitialize:true,
+    enableReinitialize: true,
   });
 
   return (
