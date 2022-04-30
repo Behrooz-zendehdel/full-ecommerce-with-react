@@ -3,9 +3,11 @@ import Input from "../../common/Input";
 import * as yup from "yup";
 import "./signup.css";
 import { Link } from "react-router-dom";
+
 import signupUser from "../../Services/sinupService";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+
 const initialValues = {
   name: "",
   email: "",
@@ -32,10 +34,15 @@ const validationSchema = yup.object({
     .nullable(),
 
   password: yup.string().required("password is required"),
+
+
+
+
   // .matches(
   //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
   //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
   // ),
+
 
   passwordConfrim: yup
     .string()
@@ -51,6 +58,7 @@ const SignupForm = (history) => {
     const userData = {
       name,
       email,
+
       phoneNumber,
       password,
     };
@@ -68,6 +76,7 @@ const SignupForm = (history) => {
         setError(error.response.data.message);
     }
   };
+
 
   const formik = useFormik({
     initialValues: initialValues,
